@@ -194,17 +194,20 @@ function App() {
             className="hidden"
           />
 
-          <div className="flex gap-4 mb-4">
+          <div className="flex flex-col sm:flex-row gap-4 mb-4">
             <input
               type="text"
               value={question}
               onChange={(e) => setQuestion(e.target.value)}
-              placeholder="Ask about your timetable (e.g., When is my next class?)"
-              className="flex-1 p-3 border rounded"
+              placeholder="Ask about your timetable"
+              className="p-3 border rounded"
             />
+            <p className="text-sm text-gray-500 mb-2 sm:mb-0 self-end">
+              (e.g., When is my next class?)
+            </p>
             <button
               onClick={toggleListening}
-              className={`flex items-center gap-2 px-4 py-2 rounded transition ${
+              className={`self-stretch sm:self-auto flex items-center justify-center gap-2 px-4 py-2 rounded transition ${
                 isListening
                   ? "bg-red-500 hover:bg-red-600"
                   : "bg-purple-500 hover:bg-purple-600"
