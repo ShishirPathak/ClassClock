@@ -5,14 +5,14 @@ import { askGemini, summaryPrompt } from "./utils/geminiService";
 function App() {
   const [username, setUsername] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [timetableContent, setTimetableContent] = useState<string | undefined>(
-    ""
-  );
+  const [timetableContent, setTimetableContent] = useState<string>("");
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
   const [loading, setLoading] = useState(false);
   const [isListening, setIsListening] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
+  const [showInstruction, setShowInstruction] = useState(false);
+
   const fileInputRef = useRef<HTMLInputElement>(null);
   const recognitionRef = useRef<SpeechRecognition | null>(null);
 
@@ -136,9 +136,9 @@ function App() {
     return (
       <div className="min-h-screen bg-gray-100 flex items-center justify-center">
         <div className="bg-white p-8 rounded-lg shadow-md w-96">
-          <h1 className="text-2xl font-bold mb-6 text-center">
-            Welcome to Timetable Assistant
-          </h1>
+          <h3 className="text-2xl font-bold mb-6 text-center">
+            🔓 Your Class Schedule, Unlocked! 🎓{" "}
+          </h3>
           <form onSubmit={handleLogin}>
             <input
               type="text"
@@ -155,6 +155,10 @@ function App() {
               Continue
             </button>
           </form>
+          {/* Footer */}
+          <footer className="text-center text-gray-500 mt-8">
+            Crafted with ❤️ by Shishir{" "}
+          </footer>
         </div>
       </div>
     );
@@ -163,21 +167,39 @@ function App() {
   return (
     <div className="min-h-screen bg-gray-100 p-8">
       <div className="max-w-4xl mx-auto">
-        <header className="bg-white rounded-lg shadow-md p-6 mb-8">
-          <h1 className="text-2xl font-bold">Welcome, {username}!</h1>
-          <p className="text-gray-600">
+        <header className="bg-white rounded-lg shadow-md p-6 mb-8 ">
+          <h1 className=" text-2xl font-bold text-center">
+            Welcome, {username}!
+          </h1>
+          <p className=" text-gray-600 text-center">
             Upload your timetable and ask questions about your schedule.
           </p>
+          <button
+            onClick={() => setShowInstruction(!showInstruction)}
+            className="text-blue-500 hover:text-blue-600 mx-auto block mt-2"
+          >
+            How to download the .ics file from COIN?
+          </button>
+          {showInstruction && (
+            <div className="text-gray-700 mt-2 bg-blue-100 p-4 rounded-lg mx-auto text-center">
+              Here are the steps to download the .ics file from COIN:
+              <ol className="list-decimal list-inside">
+                <li>Step 1...</li>
+                <li>Step 2...</li>
+                <li>Step 3...</li>
+              </ol>
+            </div>
+          )}
         </header>
 
         <div className="bg-white rounded-lg shadow-md p-6 mb-8">
           <div className="flex items-center gap-4 mb-6">
             <button
               onClick={() => fileInputRef.current?.click()}
-              className="flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
+              className="flex-1 flex items-center justify-center gap-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition disabled:opacity-50"
             >
               <Upload size={20} />
-              Upload Timetable
+              Upload Timetable (.ics File)
             </button>
             {timetableContent && (
               <span className="text-green-500 flex items-center gap-2">
@@ -200,10 +222,10 @@ function App() {
               value={question}
               onChange={(e) => setQuestion(e.target.value)}
               placeholder="Ask about your timetable"
-              className="p-3 border rounded"
+              className="w-full p-3 border rounded"
             />
-            <p className="text-sm text-gray-500 mb-2 sm:mb-0 self-end">
-              (e.g., When is my next class?)
+            <p className="text-sm text-gray-500 mb-2 sm:mb-0">
+              (e.g., When is my Artificial Intelligence class?)
             </p>
             <button
               onClick={toggleListening}
@@ -255,6 +277,10 @@ function App() {
               <p className="text-gray-700">{answer}</p>
             </div>
           )}
+          {/* Footer */}
+          <footer className="text-center text-gray-500 mt-8">
+            Crafted with ❤️ by Shishir{" "}
+          </footer>
         </div>
       </div>
     </div>
