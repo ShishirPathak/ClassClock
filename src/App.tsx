@@ -289,6 +289,7 @@ function App() {
                 </button>
               </div>
               <p className="text-gray-700">{answer}</p>
+              <p className="text-sm text-blue-800 mt-2">Note: AI can occasionally make mistakes. Please verify important information.</p>
             </div>
           )}
           {/* Footer */}
