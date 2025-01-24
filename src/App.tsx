@@ -135,9 +135,9 @@ function App() {
   if (!isLoggedIn) {
     return (
       <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-        <div className="bg-white p-8 rounded-lg shadow-md w-96">
-          <h3 className="text-2xl font-bold mb-6 text-center">
-            🔓 Your Class Schedule, Unlocked! 🎓{" "}
+        <div className="bg-white p-8 rounded-lg shadow-md w-120">
+          <h3 className="text-lg font-bold mb-6 text-center">
+            🔓 UMassD: AI Bot Unlocks Schedules! 🎓{" "}
           </h3>
           <form onSubmit={handleLogin}>
             <input
@@ -181,13 +181,27 @@ function App() {
             How to download the .ics file from COIN?
           </button>
           {showInstruction && (
-            <div className="text-gray-700 mt-2 bg-blue-100 p-4 rounded-lg mx-auto text-center">
-              Here are the steps to download the .ics file from COIN:
-              <ol className="list-decimal list-inside">
-                <li>Step 1...</li>
-                <li>Step 2...</li>
-                <li>Step 3...</li>
-              </ol>
+            <div className="text-gray-700 mt-2 bg-blue-100 p-4 rounded-lg mx-auto">
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <ol
+                  className=" list-decimal list-inside"
+                  style={{ textAlign: "left", maxWidth: "600px" }}
+                >
+                  <span className="font-bold text-lg">Here are the steps to download the .ics file from COIN:</span>
+                  <li>Login to MyUmassD</li>
+                  <li>Go to QUICKLAUNCH</li>
+                  <li>Select 'Coin for students'</li>
+                  <li>Expand 'Academics' on the left panel sidebar</li>
+                  <li>Click on 'My class schedule'</li>
+                  <li>You will see a link 'Email as a .ics'</li>
+                  <li>
+                    Click on the link. It will send .ics file to your university
+                    email
+                  </li>
+                  <li>Download the .ics file from your email</li>
+                  <li>Upload the .ics file to this application</li>
+                </ol>
+              </div>
             </div>
           )}
         </header>
