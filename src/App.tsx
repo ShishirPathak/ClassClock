@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { ClipLoader } from "react-spinners";
 import { Upload, Calendar, Send, Mic, Volume2, StopCircle } from "lucide-react";
 import { askGemini, summaryPrompt } from "./utils/geminiService";
 
@@ -12,7 +13,7 @@ function App() {
   const [isListening, setIsListening] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [showInstruction, setShowInstruction] = useState(false);
-
+  const [isUploading, setIsUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const recognitionRef = useRef<SpeechRecognition | null>(null);
 
@@ -50,6 +51,7 @@ function App() {
   };
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsUploading(true);
     const file = e.target.files?.[0];
     if (!file) return;
 
@@ -57,9 +59,11 @@ function App() {
     reader.onload = async (e) => {
       const content = e.target?.result as string;
       const summarizedTimetableContent = await summaryPrompt(content);
+      console.log("content\n", content);
 
       setTimetableContent(summarizedTimetableContent);
       sessionStorage.setItem("timetableContent", summarizedTimetableContent);
+      setIsUploading(false);
       speak(
         "Timetable uploaded successfully. You can now ask questions about your schedule."
       );
@@ -134,7 +138,7 @@ function App() {
 
   if (!isLoggedIn) {
     return (
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+      <div className="m-20 flex items-center justify-center">
         <div className="bg-white p-8 rounded-lg shadow-md w-120">
           <h3 className="text-lg font-bold mb-6 text-center">
             🔓 UMassD: AI Bot Unlocks Schedules! 🎓{" "}
@@ -165,7 +169,7 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
+    <div className="m-20 p-8">
       <div className="max-w-4xl mx-auto">
         <header className="bg-white rounded-lg shadow-md p-6 mb-8 ">
           <h1 className=" text-2xl font-bold text-center">
@@ -181,13 +185,15 @@ function App() {
             How to download the .ics file from COIN?
           </button>
           {showInstruction && (
-            <div className="text-gray-700 mt-2 bg-blue-100 p-4 rounded-lg mx-auto">
+            <div className="text-gray-700 mt-2 p-4 rounded-lg mx-auto bg-transparent shadow-2xl">
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <ol
                   className=" list-decimal list-inside"
                   style={{ textAlign: "left", maxWidth: "600px" }}
                 >
-                  <span className="font-bold text-lg">Here are the steps to download the .ics file from COIN:</span>
+                  <span className="font-bold text-lg">
+                    Here are the steps to download the .ics file from COIN:
+                  </span>
                   <li>Login to MyUmassD</li>
                   <li>Go to QUICKLAUNCH</li>
                   <li>Select 'Coin for students'</li>
@@ -215,6 +221,8 @@ function App() {
               <Upload size={20} />
               Upload Timetable (.ics File)
             </button>
+            {isUploading && <ClipLoader color="#000000" />}{" "}
+            {/* Render the spinner while uploading */}
             {timetableContent && (
               <span className="text-green-500 flex items-center gap-2">
                 <Calendar size={20} />
@@ -289,7 +297,10 @@ function App() {
                 </button>
               </div>
               <p className="text-gray-700">{answer}</p>
-              <p className="text-sm text-blue-800 mt-2">Note: AI can occasionally make mistakes. Please verify important information.</p>
+              <p className="text-sm text-blue-800 mt-2">
+                Note: AI can occasionally make mistakes. Please verify important
+                information.
+              </p>
             </div>
           )}
           {/* Footer */}
