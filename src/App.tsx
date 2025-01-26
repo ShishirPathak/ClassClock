@@ -138,10 +138,10 @@ function App() {
 
   if (!isLoggedIn) {
     return (
-      <div className="m-20 flex items-center justify-center">
-        <div className="bg-white p-8 rounded-lg shadow-md w-120">
+      <div className="m-4 sm:m-8 md:m-20 flex flex-col sm:flex-row items-center justify-center">
+        <div className="bg-white p-8 rounded-lg shadow-md w-full sm:w-3/4 md:w-1/2 lg:w-1/3 xl:w-1/4">
           <h3 className="text-lg font-bold mb-6 text-center">
-            🔓 UMassD: AI Bot Unlocks Schedules! 🎓{" "}
+            🔓 UMassD: AI Bot Unlocks Schedules! 🎓
           </h3>
           <form onSubmit={handleLogin}>
             <input
@@ -161,7 +161,7 @@ function App() {
           </form>
           {/* Footer */}
           <footer className="text-center text-gray-500 mt-8">
-            Crafted with ❤️ by Shishir{" "}
+            Crafted with ❤️ by Shishir
           </footer>
         </div>
       </div>
@@ -169,8 +169,8 @@ function App() {
   }
 
   return (
-    <div className="m-20 p-8">
-      <div className="max-w-4xl mx-auto">
+    <div className="m-4 sm:m-8 md:m-20 p-8">
+      <div className="max-w-full sm:max-w-md md:max-w-xl lg:max-w-2xl xl:max-w-4xl mx-auto">
         <header className="bg-white rounded-lg shadow-md p-6 mb-8 ">
           <h1 className=" text-2xl font-bold text-center">
             Welcome, {username}!
